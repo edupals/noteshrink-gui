@@ -1,6 +1,6 @@
 #RSRC = "/usr/share/noteshrink-gui/rsrc/"
 RSRC = "./rsrc/"
-CSS_FILE = RSRC + "noteshrink.css"
+CSS_FILE = RSRC + "noteshrink-gui.css"
 UI_FILE = RSRC + "noteshrink.ui"
 WINDOW_TITLE = "Noteshrink"
 

@@ -4,6 +4,7 @@ from NoteshrinkGui import NoteshrinkGui
 from ConvertBox import ConvertBox
 from NoteshrinkInterface import NoteshrinkInterface
 
+
 class Core:
 	
 	singleton=None
@@ -28,16 +29,18 @@ class Core:
 	def init(self):
 		
 		self.dprint("Creating ConvertBox...")
-		#self.convert_box = ConvertBox()
+		self.convert_box = ConvertBox()
+
+		self.dprint("Creating NoteshrinInterface...")
 		self.noteshrink_interface = NoteshrinkInterface()
 		
 		
 		# Main window must be the last one
-		# self.dprint("Creating NoteshrinkGui...")
-		# self.noteshrink_gui = NoteshrinkGui()
+		self.dprint("Creating NoteshrinGui...")
+		self.noteshrink_gui = NoteshrinkGui()
 		
-		# self.noteshrink_gui.load_gui()
-		# self.noteshrink_gui.start_gui()
+		self.noteshrink_gui.load_gui()
+		self.noteshrink_gui.start_gui()
 		
 		
 	#def init

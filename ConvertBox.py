@@ -1,6 +1,3 @@
-#!/usr/bin/env python
-
-
 import gi
 gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk, Pango, GdkPixbuf, Gdk, Gio, GObject,GLib
@@ -20,76 +17,30 @@ import settings
 gettext.textdomain(settings.TEXT_DOMAIN)
 _ = gettext.gettext
 
-OUTPUT_FILE="_pmb.sql"
-
-
 
 class ConvertBox(Gtk.VBox):
-
 	def __init__(self):
-		
 		Gtk.VBox.__init__(self)
-		
 		self.core=Core.Core.get_core()
-		self.commonFunc=CommonFunc()
-		
+
 		builder = Gtk.Builder()
 		builder.set_translation_domain(settings.TEXT_DOMAIN)
 		builder.add_from_file(settings.UI_FILE)
+		self.addfile = builder.get_object("addfile_button")
+		self.addfolder = builder.get_object("addfolder_button")
+		self.apply = builder.get_object("apply_button")
+		self.pngoutput_flag = builder.get_object("png_cb")
+		self.pdfoutput_flag = builder.get_object("pdf_cb")
+		self.output_folder = builder.get_object("outputfolder_input")
 
-		self.main_box=builder.get_object("convert_data_box")
-		self.drop=builder.get_object("drop_area_box")
-		self.drop_label=builder.get_object("drop_label")
-		self.inputfile_label=builder.get_object("inputfile_label")
-		self.inputfile_entry=builder.get_object("filechooser_input")
-		self.outputpath_label=builder.get_object("outputpath_label")
-		self.outputpath_entry=builder.get_object("filechooser_output")
-		self.outputfile_label=builder.get_object("outputfile_label")
-		self.outputfile_label.set_width_chars(24)
-		self.outputfile_label.set_max_width_chars(24)
-		self.outputfile_label.set_xalign(-1)
-		self.outputfile_label.set_ellipsize(Pango.EllipsizeMode.START)
-		
-		self.convert_button=builder.get_object("convert_button")
-		self.convert_label=builder.get_object("convert_label")
-		
-		self.check_window=builder.get_object("check_window")
-		self.check_label=builder.get_object("check_label")
-		self.check_pbar=builder.get_object("check_pbar")
-
-		drop_param = [self.inputfile_entry, self.outputpath_entry, self.outputfile_label, self.convert_label, self.convert_button]
-		self.drop_area = DropArea(drop_param)
-		self.drop.pack_start(self.drop_area, True, True,0)	
-				
-		self.pack_start(self.main_box, True, True, 0)
-	
-		self.add_text_targets()
-		self.connect_signals()
-		self.set_css_info()
-		self.convert_button.set_sensitive(False)
-		self.outputpath_entry.set_sensitive(False)
+		#self.connect_signals()
+		#self.set_css_info()
 		GObject.threads_init()
 
-					
-	#def __init__
+	def connect_signals(self):
+		self.apply.connect("clicked",self.convert_files)
 
-	def add_text_targets(self):
-
-		self.drop_area.drag_dest_set_target_list(None)
-		self.drop_area.drag_dest_add_text_targets()
-
-    #def add_text_targets    
- 
- 	def connect_signals(self):
-
- 		self.inputfile_entry.connect("file-set",self.input_file_changed)
- 		self.outputpath_entry.connect("file-set",self.output_file_changed)
- 		self.convert_button.connect("clicked",self.accept_convert_clicked)
-
- 	#def connect_signals	
-
- 	def set_css_info(self):
-
+	def set_css_info(self):
 		self.style_provider=Gtk.CssProvider()
 
 		f=Gio.File.new_for_path(settings.CSS_FILE)
@@ -100,99 +51,35 @@ class ConvertBox(Gtk.VBox):
 		self.inputfile_label.set_name("OPTION_LABEL")
 		self.outputpath_label.set_name("OPTION_LABEL")
 		self.outputfile_label.set_name("OUTPUT_LABEL")
-		self.check_label.set_name("MSG_LABEL")		
+		self.check_label.set_name("MSG_LABEL")
 
-	#def set_css_info	
+	def convert_files(self):
+		print(self.output_folder)
+		self.core.noteshrink_interface.process_files()
 
- 	def input_file_changed(self,widget):
 
- 		entry = self.inputfile_entry.get_filename()
- 		check_extension = self.commonFunc.check_extension(entry)
- 		param = [check_extension['status'], check_extension['code'], entry, self.outputpath_entry, self.outputfile_label, self.convert_label, self.convert_button]
-
- 		self.commonFunc.manage_outputinfo(param)
-
- 	#def input_file_changed	
- 	
- 		
- 	def output_file_changed(self,widget):
-
- 		name=os.path.basename(self.inputfile_entry.get_filename()).strip(".mdb")+OUTPUT_FILE
- 		self.outputfile_label.set_text(name)	
-
- 	#def output_file_changed	
-
- 	def accept_convert_clicked(self,widget):
- 	
- 		check_outputpath=self.check_outputpath()
-
- 		if check_outputpath["status"]:
- 			self.convert_label.set_text("")
- 			self.convert_t=threading.Thread(target=self.convert)
-			self.convert_t.daemon=True
-			self.convert_t.start()
-			self.check_window.show_all()
-	 		GLib.timeout_add(100,self.pulsate_convert)
-	
-		else:
- 			msg=self.commonFunc.get_msg(check_outputpath["code"])
- 			self.convert_label.set_text(msg)
- 			self.convert_label.set_name("MSG_ERROR_LABEL")
-
- 	#def accept_convert_clicked	
-
- 	def check_outputpath(self):
- 	
- 		outputpath=self.outputpath_entry.get_filename()
- 		result={}
- 		result["status"]=""
- 		result["code"]=""
-
- 		
- 		if os.access(outputpath,os.W_OK):	
- 			result["status"]=True
- 			
- 		else:
- 			result["status"]=False
- 			result["code"]=3
-
- 		return result	
- 	
- 	#def check_outputpath
- 
- 	def pulsate_convert(self):
- 	
- 		if self.convert_t.is_alive():
- 			self.check_pbar.pulse()
- 			return True
-
- 		else:
- 			self.check_window.hide()
- 			if self.result_convert["status"]:
- 				self.convert_label.set_name("MSG_LABEL")
- 				msg=self.commonFunc.get_msg(4)
- 			else:
- 				self.convert_label.set_name("MSG_ERROR_LABEL")
- 				msg=self.commonFunc.get_msg(self.result_convert["code"])
-
- 				
- 			self.convert_label.set_text(msg)
- 			
- 			return False
-
- 	#def pulsate_convert		
-
- 	def convert(self):
- 		
- 		inputfile=self.inputfile_entry.get_filename()
- 		output_file=os.path.basename(inputfile).strip(".mdb").replace(' ' ,'_')+OUTPUT_FILE
- 		output_path=os.path.join(self.outputpath_entry.get_filename(),output_file)
- 		self.result_convert=self.core.abies2pmb.beginMigration(inputfile,output_path)
- 		
- 	#def convert
- 	
- #class ConvertBox	
-
+	def new_package_button(self,pkg_name):
+		
+		hbox=Gtk.HBox()
+		label=Gtk.Label(pkg_name)
+		b=Gtk.Button()
+		i=Gtk.Image.new_from_file("trash.svg")
+		b.add(i)
+		b.set_halign(Gtk.Align.CENTER)
+		b.set_valign(Gtk.Align.CENTER)
+		b.set_name("DELETE_ITEM_BUTTON")
+		b.connect("clicked",self.delete_package_clicked,hbox)
+		hbox.pack_start(label,False,False,0)
+		hbox.pack_end(b,False,False,10)
+		hbox.show_all()
+		label.set_margin_right(20)
+		label.set_margin_left(20)
+		label.set_margin_top(20)
+		label.set_margin_bottom(20)
+		hbox.set_name("PKG_BOX")
+		self.package_list_box.pack_start(hbox,False,False,5)
+		self.package_list_box.queue_draw()
+		hbox.queue_draw()
  		
 class DropArea(Gtk.Image):
 
@@ -241,101 +128,3 @@ class DropArea(Gtk.Image):
 	#def on_drag_data_received
 	
 #class DropArea		
-
-
-class CommonFunc():
-
-	def check_extension(self,file):
-
- 		result={}
- 		result["status"]=""
- 		result["code"]=""
- 		
- 		if file ==None:
- 			result["status"]=False
- 			result["code"]=0
- 			
- 		else:
- 			
-	 		try:	
-	 			file_extension=splitext(file)
-
-	 			if file_extension[1] != '.mdb':
-	 				result["status"]=False
-	 				result["code"]=1
-	 			else:
-	 				result["status"]=True
-
-	 			
-	 		except:
-	 			result["status"]=False
-	 			result["code"]=2
-	 			print "Unable to detect extension" 		
- 		
- 		return result	
-
- 	#def check_extension	
-
- 	def manage_outputinfo(self,param):
- 	
- 		if param[0]:
- 			path=os.path.dirname(param[2])
-			param[3].set_sensitive(True)
-			param[3].set_filename(path)
-			name=os.path.basename(param[2]).strip(".mdb").replace(' ','_')+OUTPUT_FILE
-			param[4].set_text(name)
-			param[5].set_text("")
-			param[6].set_sensitive(True)
-			
-		else:
-			msg=self.get_msg(param[1])
-			param[3].set_sensitive(False)
-			param[4].set_text("")
-			param[5].set_name("MSG_ERROR_LABEL")
-			param[5].set_text(msg)
-			param[6].set_sensitive(False)
-			
-	#def manage_ouputinfo	
-
-	def get_msg(self,code):
- 	
- 		if 	code==0:
-			msg_text=_("Error: No file upload to convert")
-		
-		elif code==1:
-			msg_text=_("Error: File with incorret extension .mdb is required")
-
-		elif code==2:
-			msg_text=_("Error: Unable to detect file extension")
-
-		elif code==3:
-			msg_text=_("Error: Output path is not owned by user")	
-
-		elif code==4:
-			msg_text=_("Conversion successful")	
-
-		elif code==10:
-			msg_text=_("Error: Table not found in input file")
-
-		elif code==11:
-			msg_text=_("Error: Problem ocurred while importing input file")
-
-		elif code==12:
-			msg_text=_("Error: Problem exporting input file to csv")
-
-		elif code==13:
-			msg_text=_("Error: Problem generating intermediate sql file")
-
-		elif code==14:
-			msg_text=_("Error: Problem generating output file")
-	
-		elif code==15:
-			msg_text=_("Error: No table in input file to virtual table")
-
-		elif code==16:
-			msg_text=_("Error: Couldn't fetch data from table")
-	
-		
-		return msg_text		
-
-	#deg get_msg	
