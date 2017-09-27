@@ -29,23 +29,38 @@ class NoteshrinkGui:
 		builder.add_from_file(settings.UI_FILE)
 		
 		self.main_window = builder.get_object("main_window")
-		self.main_window.set_title(settings.WINDOW_TITLE)
-		self.main_box = builder.get_object("main_box")
+		self.viewport = builder.get_object("listfiles_vp")
+
+		# Toolbar widgets
 		self.add_file = builder.get_object("addfile_button")
 		self.add_folder = builder.get_object("addfolder_button")
 		self.apply = builder.get_object("apply_button")
+
+		# Options widgets
+		self.output_png = builder.get_object("png_cb")
+		self.output_pdf = builder.get_object("pdf_cb")
+		self.output_path = builder.get_object("outputfolder_input")
 		
-		# self.convert_box=self.core.convert_box
-		# self.main_box.add(self.convert_box)
+		self.convert_box = self.core.convert_box
+		self.viewport.add(self.convert_box)
 
 		# Add components
-			
+		self.set_default_values()
 		self.set_css_info()
 		self.connect_signals()
 		
 		self.main_window.show_all()
 		
 	#def load_gui
+
+	def set_default_values(self):
+		self.main_window.set_title(settings.WINDOW_TITLE)
+		self.main_window.set_default_size(900,400)
+		self.output_png.set_active(self.core.noteshrink_interface.pngoutput)
+		self.output_pdf.set_active(self.core.noteshrink_interface.pdfoutput)
+		self.output_path.set_filename(GLib.get_user_special_dir(GLib.USER_DIRECTORY_DOCUMENTS))
+	#def set_default_values
+
 
 	def set_css_info(self):
 		self.style_provider = Gtk.CssProvider()
@@ -81,7 +96,10 @@ class NoteshrinkGui:
 		response = dialog.run()
 		if response == Gtk.ResponseType.OK:
 			print("Open clicked")
-			self.core.noteshrink_interface.inputfiles.extend(dialog.get_filenames())
+			files = dialog.get_filenames()
+			self.core.noteshrink_interface.inputfiles.extend(files)
+			for x in files:
+				self.convert_box.new_file(x)
 			dialog.close()
 		elif response == Gtk.ResponseType.CANCEL:
 			dialog.close()
@@ -105,7 +123,7 @@ class NoteshrinkGui:
 
 	def convert_files(self,widget):
 		self.core.dprint("Click convert files")
-		#self.core.noteshrink_interface.process_files()
+		# self.core.noteshrink_interface.process_files(self.output_path.get_filename())
 	#def convert_files
 
 	def add_folder_filters(self,widget):

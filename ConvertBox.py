@@ -22,53 +22,38 @@ class ConvertBox(Gtk.VBox):
 	def __init__(self):
 		Gtk.VBox.__init__(self)
 		self.core=Core.Core.get_core()
+		self.void = True
+		self.background_img = None
+		self.set_background()
 
-		builder = Gtk.Builder()
-		builder.set_translation_domain(settings.TEXT_DOMAIN)
-		builder.add_from_file(settings.UI_FILE)
-		self.addfile = builder.get_object("addfile_button")
-		self.addfolder = builder.get_object("addfolder_button")
-		self.apply = builder.get_object("apply_button")
-		self.pngoutput_flag = builder.get_object("png_cb")
-		self.pdfoutput_flag = builder.get_object("pdf_cb")
-		self.output_folder = builder.get_object("outputfolder_input")
+	def set_background(self):
+		self.background_img = Gtk.Image.new_from_stock("gtk-copy",Gtk.IconSize.MENU)
+		self.background_img.set_halign(Gtk.Align.CENTER)
+		self.background_img.set_valign(Gtk.Align.CENTER)
+		# self.background_img.drag_dest_set(Gtk.DestDefaults.ALL, [], Gdk.DragAction.COPY)
+		self.background_img.enable_model_drag_source(Gdk.ModifierType.BUTTON1_MASK, [],DRAG_ACTION)
+		self.background_img.connect("drag-data-received",self.drag_files)
+		self.background_img.show()
+		self.set_homogeneous(True)
+		self.pack_start(self.background_img,False,False,0)
+		self.queue_draw()
 
-		#self.connect_signals()
-		#self.set_css_info()
-		GObject.threads_init()
-
-	def connect_signals(self):
-		self.apply.connect("clicked",self.convert_files)
-
-	def set_css_info(self):
-		self.style_provider=Gtk.CssProvider()
-
-		f=Gio.File.new_for_path(settings.CSS_FILE)
-		self.style_provider.load_from_file(f)
-
-		Gtk.StyleContext.add_provider_for_screen(Gdk.Screen.get_default(),self.style_provider,Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION)
-		self.drop_label.set_name("OPTION_LABEL")
-		self.inputfile_label.set_name("OPTION_LABEL")
-		self.outputpath_label.set_name("OPTION_LABEL")
-		self.outputfile_label.set_name("OUTPUT_LABEL")
-		self.check_label.set_name("MSG_LABEL")
-
-	def convert_files(self):
-		print(self.output_folder)
-		self.core.noteshrink_interface.process_files()
-
-
-	def new_package_button(self,pkg_name):
-		
+	def new_file(self,pkg_name):
+		if self.background_img:
+			# self.remove(self.background_img)
+			# self.set_homogeneous(False)
+			# self.background_img = None
+			self.set_homogeneous(False)
+			self.background_img.hide()
 		hbox=Gtk.HBox()
 		label=Gtk.Label(pkg_name)
 		b=Gtk.Button()
-		i=Gtk.Image.new_from_file("trash.svg")
-		b.add(i)
-		b.set_halign(Gtk.Align.CENTER)
-		b.set_valign(Gtk.Align.CENTER)
-		b.set_name("DELETE_ITEM_BUTTON")
-		b.connect("clicked",self.delete_package_clicked,hbox)
+		# i=Gtk.Image.new_from_file("trash.svg")
+		# b.add(i)
+		# b.set_halign(Gtk.Align.CENTER)
+		# b.set_valign(Gtk.Align.CENTER)
+		# b.set_name("DELETE_ITEM_BUTTON")
+		b.connect("clicked",self.delete_file,hbox)
 		hbox.pack_start(label,False,False,0)
 		hbox.pack_end(b,False,False,10)
 		hbox.show_all()
@@ -77,10 +62,24 @@ class ConvertBox(Gtk.VBox):
 		label.set_margin_top(20)
 		label.set_margin_bottom(20)
 		hbox.set_name("PKG_BOX")
-		self.package_list_box.pack_start(hbox,False,False,5)
-		self.package_list_box.queue_draw()
+		self.pack_start(hbox,False,False,5)
+		self.queue_draw()
 		hbox.queue_draw()
- 		
+ 	#def new_file
+
+	def drag_files(self, widget, drag_context, x,y, data,info, time):
+		
+		text = data.get_text()
+		text=text.strip().split("//")
+		print(text)
+
+
+	def delete_file(self,widget,container):
+		self.remove(container)
+		if len(self.get_children()) == 1:
+			self.set_homogeneous(True)
+			self.background_img.show()
+		
 class DropArea(Gtk.Image):
 
     def __init__(self,drop_param):
