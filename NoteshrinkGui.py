@@ -35,6 +35,7 @@ class NoteshrinkGui:
 		self.add_file = builder.get_object("addfile_button")
 		self.add_folder = builder.get_object("addfolder_button")
 		self.apply = builder.get_object("apply_button")
+		self.apply1 = builder.get_object("apply_button1")
 
 		# Options widgets
 		self.output_png = builder.get_object("png_cb")
@@ -74,9 +75,20 @@ class NoteshrinkGui:
 	def connect_signals(self):
 		self.main_window.connect("destroy", self.quit)
 		self.apply.connect("clicked", self.convert_files)
+		self.apply1.connect("clicked", self.convert_files)
 		self.add_file.connect("clicked", self.open_files_selector)
 		self.add_folder.connect("clicked", self.open_folder_selector)
+		self.output_pdf.connect("toggled",self.toggle_pdf_output)
+		self.output_png.connect("toggled",self.toggle_png_output)
 	#def connect_signals
+
+	def toggle_pdf_output(self,widget):
+		self.core.noteshrink_interface.pdfoutput = not self.core.noteshrink_interface.pdfoutput
+	#def toggle_pdf_output
+
+	def toggle_png_output(self,widget):
+		self.core.noteshrink_interface.pngoutput = not self.core.noteshrink_interface.pngoutput
+	#def toggle_png_output
 
 	def quit(self, widget):
 		Gtk.main_quit()	
@@ -123,6 +135,9 @@ class NoteshrinkGui:
 
 	def convert_files(self,widget):
 		self.core.dprint("Click convert files")
+		for x in self.convert_box.get_children():
+			if type(x) == type(Gtk.HBox()):
+				print(x)
 		# self.core.noteshrink_interface.process_files(self.output_path.get_filename())
 	#def convert_files
 
