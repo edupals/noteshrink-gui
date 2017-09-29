@@ -5,6 +5,7 @@ from gi.repository import Gtk, Pango, GdkPixbuf, Gdk, Gio, GObject,GLib
 import copy
 import gettext
 import Core
+import urllib
 
 import Dialog
 import time
@@ -79,9 +80,12 @@ class ConvertBox(Gtk.VBox):
 	def drag_files(self, widget, drag_context, x,y, data,info, time):
 		text = data.get_text()
 		text = text.strip().split("\r\n")
+		
+		
 		files = []
 		for x in text:
 			if x.startswith('file://'):
+				x = urllib.unquote(x).decode('utf8')
 				files.append(x.replace('file://',''))
 		self.core.noteshrink_interface.inputfiles.extend(files)
 		for x in files:

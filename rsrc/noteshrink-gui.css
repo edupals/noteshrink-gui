@@ -1,30 +1,30 @@
 
 	GtkLabel {
-		font: Roboto;
+		font: 12px Roboto;
 	}
 	
 	#OPTION_LABEL {
-		font: Roboto Light;
+		font: 12px Roboto Light;
 
 	}
 
 	#OUTPUT_LABEL {
 
 		color: #3366cc;
-		font: Roboto Bold 10;
+		font: 10px Roboto Bold;
 
 	}
 
 	#MSG_ERROR_LABEL {
 
 		color: #CC0000;
-		font: Roboto Bold 11; 
+		font: 11px Roboto Bold ; 
 	}
 
 	#MSG_LABEL {
 
 		color: #3366cc;
-		font: Roboto Bold 11;
+		font: 11px Roboto Bold ;
 			
 	}	
 
