@@ -2,14 +2,11 @@ import gi
 gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk, Pango, GdkPixbuf, Gdk, Gio, GObject,GLib
 
-import copy
 import gettext
 import Core
-import urllib
+from urllib import unquote
 
-import time
 import threading
-import os
 from os.path import splitext, join
 
 import settings
@@ -97,7 +94,7 @@ class ConvertBox(Gtk.VBox):
 		files = []
 		for x in text:
 			if x.startswith('file://'):
-				x = urllib.unquote(x).decode('utf8')
+				x = unquote(x).decode('utf8')
 				files.append(x.replace('file://',''))
 		self.core.noteshrink_interface.inputfiles.extend(files)
 		for x in files:
