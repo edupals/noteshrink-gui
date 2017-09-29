@@ -7,7 +7,6 @@ import gettext
 import Core
 import urllib
 
-import Dialog
 import time
 import threading
 import os
@@ -60,9 +59,22 @@ class ConvertBox(Gtk.VBox):
 		b.set_valign(Gtk.Align.CENTER)
 		b.set_name("DELETE_BUTTON")
 		b.connect("clicked",self.delete_file,hbox,label)
+
+		v = Gtk.VBox()
+		up = Gtk.Button()
+		l = Gtk.Label("Up")
+		up.add(l)
+		down = Gtk.Button()
+		l1 = Gtk.Label("Down")
+		down.add(l1)
+		v.pack_start(up,False,False,0)
+		v.pack_start(down,False,False,0)
+		v.set_valign(Gtk.Align.CENTER)
+		
 		hbox.pack_start(miniature,False,False,0)
 		hbox.pack_start(label,False,False,0)
 		hbox.pack_end(b,False,False,10)
+		hbox.pack_end(v,False,False,10)
 		hbox.show_all()
 		hbox.pepito=pkg_name
 		label.set_margin_right(20)
@@ -97,51 +109,3 @@ class ConvertBox(Gtk.VBox):
 		if len(self.get_children()) == 1:
 			self.set_homogeneous(True)
 			self.background_img.show()
-		
-class DropArea(Gtk.Image):
-
-    def __init__(self,drop_param):
-
-    	self.drop=False
-    	self.commonFunc=CommonFunc()
-    	self.inputpath=drop_param[0]
-    	self.destpath=drop_param[1]
-    	self.outputfile_label=drop_param[2]
-    	self.convert_label=drop_param[3]
-    	self.convert_button=drop_param[4]
-
-
-    	Gtk.Image.__init__(self)
-    	Gtk.Image.set_from_file(self,settings.DROP_FILE)
-    	self.drag_dest_set(Gtk.DestDefaults.ALL, [], Gdk.DragAction.COPY)
-       	
-       	self.connect("drag-data-received", self.on_drag_data_received)
-       	self.text=""
-
-    #def __init__   	
-
-    def on_drag_data_received(self, widget, drag_context, x,y, data,info, time):
-	    
-		self.drop=True
-		text = data.get_text()
-		text=text.strip().split("//")
-		
-		text[1]=text[1].replace('%20',' ')
-		check=self.commonFunc.check_extension(text[1])
-		self.inputpath.set_filename(text[1])
-		self.inputpath.set_sensitive(False)
-
-		if check["status"]:
-			Gtk.Image.set_from_file(self,settings.DROP_CORRECT)
-			
-		else:
-
-			Gtk.Image.set_from_file(self,settings.DROP_INCORRECT)
-			
-		param=[check['status'],check['code'],text[1],self.destpath,self.outputfile_label,self.convert_label,self.convert_button]
-	
-		self.commonFunc.manage_outputinfo(param)	
-
-	#def on_drag_data_received
-	
-#class DropArea		
