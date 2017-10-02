@@ -27,7 +27,8 @@ class ConvertBox(Gtk.VBox):
 		self.drag_dest_add_text_targets()
 
 	def set_background(self):
-		self.background_img = Gtk.Image.new_from_stock("gtk-copy",Gtk.IconSize.MENU)
+		# self.background_img = Gtk.Image.new_from_stock("gtk-copy",Gtk.IconSize.MENU)
+		self.background_img = Gtk.Image.new_from_file(join(settings.RSRC,"drag_and_drop.svg"))
 		self.background_img.set_halign(Gtk.Align.CENTER)
 		self.background_img.set_valign(Gtk.Align.CENTER)
 		# self.background_img.drag_dest_set(Gtk.DestDefaults.ALL, [], Gdk.DragAction.COPY)
