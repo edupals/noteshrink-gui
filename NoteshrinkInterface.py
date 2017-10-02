@@ -11,6 +11,7 @@ class NoteshrinkInterface():
 		self.core=Core.Core.get_core()
 		self.pdfoutput = True
 		self.pngoutput = False
+		self.pdfmulti = False
 		self.pngbasename = "page"
 		self.pdfbasename = "output.pdf"
 		self.inputfiles = []

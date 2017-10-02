@@ -4,7 +4,8 @@ from gi.repository import Gtk, Pango, GdkPixbuf, Gdk, Gio, GObject,GLib
 
 import gettext
 import Core
-from urllib import unquote
+from urllib.parse import unquote
+import magic
 
 import threading
 from os.path import splitext, join
@@ -25,23 +26,23 @@ class ConvertBox(Gtk.VBox):
 		self.drag_dest_set(Gtk.DestDefaults.ALL, [], Gdk.DragAction.COPY)
 		self.connect("drag-data-received",self.drag_files)
 		self.drag_dest_add_text_targets()
+		self.mime = magic.open(magic.MAGIC_MIME)
+		self.mime.load()
 
 	def set_background(self):
-		# self.background_img = Gtk.Image.new_from_stock("gtk-copy",Gtk.IconSize.MENU)
 		self.background_img = Gtk.Image.new_from_file(join(settings.RSRC,"drag_and_drop.svg"))
 		self.background_img.set_halign(Gtk.Align.CENTER)
 		self.background_img.set_valign(Gtk.Align.CENTER)
-		# self.background_img.drag_dest_set(Gtk.DestDefaults.ALL, [], Gdk.DragAction.COPY)
 		self.background_img.show()
 		self.set_homogeneous(True)
 		self.pack_start(self.background_img,False,False,0)
 		self.queue_draw()
 
 	def new_file(self,pkg_name):
+		if self.mime.file(pkg_name).find("image/") != 0 :
+			return 
+
 		if self.background_img:
-			# self.remove(self.background_img)
-			# self.set_homogeneous(False)
-			# self.background_img = None
 			self.set_homogeneous(False)
 			self.background_img.hide()
 		hbox = Gtk.HBox()
@@ -56,25 +57,27 @@ class ConvertBox(Gtk.VBox):
 		b.set_halign(Gtk.Align.CENTER)
 		b.set_valign(Gtk.Align.CENTER)
 		b.set_name("DELETE_BUTTON")
-		b.connect("clicked",self.delete_file,hbox,label)
+		b.connect("clicked",self.delete_file,hbox)
 
 		v = Gtk.VBox()
 		up = Gtk.Button()
-		l = Gtk.Label("Up")
+		l = Gtk.Image.new_from_stock("gtk-go-up",Gtk.IconSize.MENU)
 		up.add(l)
 		down = Gtk.Button()
-		l1 = Gtk.Label("Down")
+		l1 = Gtk.Image.new_from_stock("gtk-go-down",Gtk.IconSize.MENU)
 		down.add(l1)
+		up.connect('clicked', self.move_element, hbox, -1)
+		down.connect('clicked', self.move_element, hbox, 1)
 		v.pack_start(up,False,False,0)
 		v.pack_start(down,False,False,0)
 		v.set_valign(Gtk.Align.CENTER)
 		
+		hbox.pack_start(v,False,False,0)
 		hbox.pack_start(miniature,False,False,0)
 		hbox.pack_start(label,False,False,0)
 		hbox.pack_end(b,False,False,10)
-		hbox.pack_end(v,False,False,10)
 		hbox.show_all()
-		hbox.pepito=pkg_name
+		hbox.file_path = pkg_name
 		label.set_margin_right(20)
 		label.set_margin_left(20)
 		label.set_margin_top(20)
@@ -90,20 +93,24 @@ class ConvertBox(Gtk.VBox):
 	def drag_files(self, widget, drag_context, x,y, data,info, time):
 		text = data.get_text()
 		text = text.strip().split("\r\n")
-		
-		
 		files = []
 		for x in text:
 			if x.startswith('file://'):
-				x = unquote(x).decode('utf8')
+				x = bytes(unquote(x),"utf-8").decode('utf8')
 				files.append(x.replace('file://',''))
-		self.core.noteshrink_interface.inputfiles.extend(files)
 		for x in files:
 			self.new_file(x)
 	#def drag_files
 
-	def delete_file(self, widget, container, path ):
+	def delete_file(self, widget, container):
 		self.remove(container)
 		if len(self.get_children()) == 1:
 			self.set_homogeneous(True)
 			self.background_img.show()
+	#def delete_file
+
+	def move_element(self,widget, container, position_modifier):
+		position = self.child_get_property(container,'position')
+		new_position = position + position_modifier if position + position_modifier != 0 else position
+		self.reorder_child(container, new_position )
+	#def move_element
