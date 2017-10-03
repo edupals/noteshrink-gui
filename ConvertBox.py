@@ -99,7 +99,10 @@ class ConvertBox(Gtk.VBox):
 				x = bytes(unquote(x),"utf-8").decode('utf8')
 				files.append(x.replace('file://',''))
 		for x in files:
-			self.new_file(x)
+			if self.mime.file(x).find('inode/directory') == 0:
+				self.core.noteshrink_gui.include_folder(x)
+			else:
+				self.new_file(x)
 	#def drag_files
 
 	def delete_file(self, widget, container):

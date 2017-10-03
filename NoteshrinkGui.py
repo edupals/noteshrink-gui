@@ -6,6 +6,7 @@ from gi.repository import Gtk, Pango, GdkPixbuf, Gdk, Gio, GObject,GLib
 import signal
 import os
 import sys
+import threading
 
 import Core
 
@@ -36,6 +37,7 @@ class NoteshrinkGui:
 		self.add_folder = builder.get_object("addfolder_button")
 		self.apply = builder.get_object("apply_button")
 		self.apply1 = builder.get_object("apply_button1")
+		self.box4 = builder.get_object("box4")
 
 		# Options widgets
 		self.png_output = builder.get_object("png_cb")
@@ -143,20 +145,32 @@ class NoteshrinkGui:
 
 	def convert_files(self,widget):
 
-		# GLib.timeout_add(200,self.convert_listener)
-
 		self.core.dprint("Click convert files")
-		self.noteshrink_interface.clean_inputfiles()
-		for x in self.convert_box.get_children():
-			if type(x) == type(Gtk.HBox()):
-				self.noteshrink_interface.inputfiles.append(x.file_path)
-			
-		# self.core.noteshrink_interface.process_files(self.output_path.get_filename())
+		self.apply1.set_sensitive(False)
+		self.box4.set_sensitive(False)
+		t = threading.Thread(target=self.execute_command)
+		t.daemon = True
+		t.start()
+		GLib.timeout_add(200,self.convert_listener,t)
 	#def convert_files
 
-	def convert_listener(self):
+	def execute_command(self):
+		self.core.noteshrink_interface.clean_inputfiles()
+		for x in self.convert_box.get_children():
+			if type(x) == type(Gtk.HBox()):
+				self.core.noteshrink_interface.inputfiles.append(x.file_path)
+		self.core.noteshrink_interface.process_files(self.output_path.get_filename())
+
+
+	def convert_listener(self,t):
 		self.progressbar.pulse()
-		return True
+		thread_status = t.is_alive()
+		if not thread_status:
+			self.progressbar.set_fraction(1.0)
+			self.apply.set_sensitive(True)
+			self.apply1.set_sensitive(True)
+			self.box4.set_sensitive(True)
+		return thread_status
 
 
 	def add_folder_filters(self,widget):
