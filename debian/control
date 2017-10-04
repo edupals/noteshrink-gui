@@ -1,15 +1,15 @@
 Source: noteshrink-gui
-Section: unknown
+Section: python
 Priority: optional
 Maintainer: Raul Rodrigo Segura <raurodse@gmail.com>
 Build-Depends: debhelper (>=9)
 Standards-Version: 3.9.6
-Homepage: <insert the upstream URL, if relevant>
-#Vcs-Git: git://anonscm.debian.org/collab-maint/noteshrink-gui.git
-#Vcs-Browser: https://anonscm.debian.org/cgit/collab-maint/noteshrink-gui.git
+Homepage: http://www.lliurex.net
+Vcs-Browser: https://github.com/lliurex/noteshrink-gui.git
 
 Package: noteshrink-gui
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}
-Description: <insert up to 60 chars description>
- <insert long description, indented with spaces>
+Depends: ${shlibs:Depends}, ${misc:Depends},  
+Description: Graphica interface to noteshrink
+ Graphical interface to Convert scans of handwritten notes 
+ to beautiful, compact PDFs
