@@ -59,7 +59,6 @@ class ConvertBox(Gtk.VBox):
 		miniature.set_margin_bottom(4)
 		label = Gtk.Label(pkg_name)
 		b = Gtk.Button()
-		# i = Gtk.Image.new_from_file(join(settings.RSRC,"trash.svg"))
 		i = Gtk.Image.new_from_stock("gtk-delete",Gtk.IconSize.MENU)
 		b.add(i)
 		b.set_halign(Gtk.Align.CENTER)
