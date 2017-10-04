@@ -1,0 +1,66 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-10-04 13:41+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: rsrc/noteshrink.ui:26
+msgid "Add files"
+msgstr ""
+
+#: rsrc/noteshrink.ui:27 rsrc/noteshrink.ui:41
+msgid "toolbutton1"
+msgstr ""
+
+#: rsrc/noteshrink.ui:40
+msgid "Add files from folder"
+msgstr ""
+
+#: rsrc/noteshrink.ui:64 rsrc/noteshrink.ui:309
+msgid "Execute"
+msgstr ""
+
+#: rsrc/noteshrink.ui:65
+msgid "toolbutton"
+msgstr ""
+
+#: rsrc/noteshrink.ui:184
+msgid "PNG"
+msgstr ""
+
+#: rsrc/noteshrink.ui:224
+msgid "Single PDF"
+msgstr ""
+
+#: rsrc/noteshrink.ui:225
+msgid "Multiple PDF"
+msgstr ""
+
+#: rsrc/noteshrink.ui:249
+msgid "<b>Output formats</b>"
+msgstr ""
+
+#: rsrc/noteshrink.ui:271
+msgid "<b>Output folder</b>"
+msgstr ""
+
+#: NoteshrinkGui.py:116
+msgid "Please choose a file"
+msgstr ""
+
+#: NoteshrinkGui.py:134
+msgid "Please choose a dolder"
+msgstr ""
