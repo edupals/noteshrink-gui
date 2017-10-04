@@ -23,6 +23,7 @@
                   <object class="GtkToolButton" id="addfile_button">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
+                    <property name="tooltip_text" translatable="yes">Add files</property>
                     <property name="label" translatable="yes">toolbutton1</property>
                     <property name="use_underline">True</property>
                     <property name="stock_id">gtk-add</property>
@@ -36,6 +37,7 @@
                   <object class="GtkToolButton" id="addfolder_button">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
+                    <property name="tooltip_text" translatable="yes">Add files from folder</property>
                     <property name="label" translatable="yes">toolbutton1</property>
                     <property name="use_underline">True</property>
                     <property name="icon_name">folder-new</property>

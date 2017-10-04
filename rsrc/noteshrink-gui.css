@@ -34,8 +34,29 @@
 		
 	}
 
-	#DELETE_BUTTON{
-		background-color: #FF0000;
+	.deletebutton{
+		border:1px solid #fff;
+		background-color: #fff;
 	}
 
+	.deletebutton:hover{
+		border:1px solid #cdcdcd;
+		background-color: #fff;
+	}
+
+	.styledboxes{
+		background-color: #fff;
+		box-shadow: 0px 1px 3px #cdcdcd;
+		padding: 3px 10px;
+	}
+
+	.orderbutton{
+		border: 1px solid #fff;
+		background-color: #fff;
+		margin-left : 20px;
+	}
 	
+	.orderbutton:hover{
+		border: 1px solid #cdcdcd;
+		
+	}

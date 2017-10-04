@@ -60,7 +60,7 @@ class NoteshrinkGui:
 
 	def set_default_values(self):
 		self.main_window.set_title(settings.WINDOW_TITLE)
-		self.main_window.set_default_size(900,500)
+		self.main_window.set_default_size(900,550)
 		self.png_output.set_active(self.core.noteshrink_interface.pngoutput)
 		self.pdf_output.set_active(self.core.noteshrink_interface.pdfoutput)
 		self.pdf_format.set_active(0)
