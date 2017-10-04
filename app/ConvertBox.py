@@ -3,14 +3,14 @@ gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk, Pango, GdkPixbuf, Gdk, Gio, GObject,GLib
 
 import gettext
-import Core
+
 from urllib.parse import unquote
 import magic
 
 import threading
 from os.path import splitext, join
 
-import settings
+from . import settings
 
 gettext.textdomain(settings.TEXT_DOMAIN)
 _ = gettext.gettext
@@ -131,3 +131,5 @@ class ConvertBox(Gtk.VBox):
 		new_position = position + position_modifier if position + position_modifier != 0 else position
 		self.reorder_child(container, new_position )
 	#def move_element
+
+from . import Core

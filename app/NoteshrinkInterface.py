@@ -3,8 +3,6 @@ from os import path
 from shutil import rmtree, move
 import subprocess
 
-import Core
-
 
 class NoteshrinkInterface():
 	def __init__(self):
@@ -80,3 +78,5 @@ class NoteshrinkInterface():
 		valid_name = self.get_valid_name(dest)
 		move(orig,valid_name)
 	#def safe_move
+
+from . import Core
