@@ -7,14 +7,15 @@ import signal
 import os
 import sys
 import threading
+import gettext
 
 import Core
 
 import settings
 
 signal.signal(signal.SIGINT, signal.SIG_DFL)
-
-
+gettext.textdomain("noteshrink-gui")
+_ = gettext.gettext
 
 class NoteshrinkGui:
 
@@ -27,6 +28,7 @@ class NoteshrinkGui:
 	def load_gui(self):
 		
 		builder = Gtk.Builder()
+		builder.set_translation_domain('noteshrink-gui')
 		builder.add_from_file(settings.UI_FILE)
 		
 		self.main_window = builder.get_object("main_window")
@@ -111,7 +113,7 @@ class NoteshrinkGui:
 	#def start_gui
 
 	def open_files_selector(self,widget):
-		dialog = Gtk.FileChooserDialog("Please choose a file", self.main_window,
+		dialog = Gtk.FileChooserDialog(_("Please choose a file"), self.main_window,
 										Gtk.FileChooserAction.OPEN,
 										(Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL,
 			 							Gtk.STOCK_OPEN, Gtk.ResponseType.OK))
@@ -129,7 +131,7 @@ class NoteshrinkGui:
 	#def open_files_selector
 
 	def open_folder_selector(self,widget):
-		dialog = Gtk.FileChooserDialog("Please choose a dolder", self.main_window,
+		dialog = Gtk.FileChooserDialog(_("Please choose a folder"), self.main_window,
 			Gtk.FileChooserAction.SELECT_FOLDER,
 			(Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL,
 			 Gtk.STOCK_OPEN, Gtk.ResponseType.OK))
