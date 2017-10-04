@@ -37,9 +37,10 @@ if __name__ == '__main__':
 		license='GPL',
 		platforms='UNIX',
 #        scripts = [''],
-		packages = ['noteshrink'],
-		package_dir = {'noteshrink':'app'},
-		package_data = {'noteshrink':['rsrc/*']},
+		packages = ['noteshrinkgui'],
+		package_dir = {'noteshrinkgui':'app'},
+		package_data = {'noteshrinkgui':['rsrc/*']},
+		scripts = ['noteshrink-gui'],
 		classifiers=[
 				'Development Status :: 4 - Beta',
 				'Environment :: Console'
