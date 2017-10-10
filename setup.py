@@ -40,6 +40,7 @@ if __name__ == '__main__':
 		packages = ['noteshrinkgui'],
 		package_dir = {'noteshrinkgui':'app'},
 		package_data = {'noteshrinkgui':['rsrc/*']},
+		data_files = [('/usr/share/applications','noteshrink-gui.desktop'),('/usr/share/icons/hicolor/scalable/apps','NoteShrink.svg')]
 		scripts = ['noteshrink-gui'],
 		classifiers=[
 				'Development Status :: 4 - Beta',
