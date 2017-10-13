@@ -9,9 +9,7 @@ import sys
 import threading
 import gettext
 
-import Core
-
-import settings
+from . import settings
 
 signal.signal(signal.SIGINT, signal.SIG_DFL)
 gettext.textdomain("noteshrink-gui")
@@ -188,3 +186,5 @@ class NoteshrinkGui:
 				self.convert_box.new_file(os.path.join(root,x))
 
 #class NoteshrinkGui
+
+from . import Core

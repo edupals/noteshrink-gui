@@ -1,15 +1,18 @@
 Source: noteshrink-gui
 Section: python
 Priority: optional
-Maintainer: Raul Rodrigo Segura <raurodse@gmail.com>
-Build-Depends: debhelper (>=9)
+Maintainer: Equipo LliureX <lliurex@gva.es> 
+Build-Depends: debhelper (>=9),
+               dh-python,
+               python-all,
+               python-setuptools
 Standards-Version: 3.9.6
-Homepage: http://www.lliurex.net
-Vcs-Browser: https://github.com/lliurex/noteshrink-gui.git
+Homepage: http://lliurex.net
+Vcs-Browser: https://github.com/lliurex/noteshrink-gui
 
 Package: noteshrink-gui
-Architecture: all
-Depends: ${shlibs:Depends}, ${misc:Depends},  
-Description: Graphica interface to noteshrink
- Graphical interface to Convert scans of handwritten notes 
- to beautiful, compact PDFs
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, ${python:Depends}, python, 
+Description: Graphic user interface for noteshrink
+  Noteshrink graphic user interface. Software used to clean scanned files and
+  join into pdf file 

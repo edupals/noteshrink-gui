@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 
-from NoteshrinkGui import NoteshrinkGui
-from ConvertBox import ConvertBox
-from NoteshrinkInterface import NoteshrinkInterface
+from .NoteshrinkGui import NoteshrinkGui
+from .ConvertBox import ConvertBox
+from .NoteshrinkInterface import NoteshrinkInterface
 
 
 class Core:

@@ -1,0 +1,20 @@
+[Desktop Entry]
+Version=1.0
+Encoding=UTF-8
+Type=Application
+Name=NoteShrink
+Name[es]=NoteShrink, limpiador de documentos
+Name[ca]=
+Name[ca_ES@valencia]=
+Name[ca_ES.UTF-8@valencia]=
+Comment=Convert scans of handwritten notes to beautiful, compact PDFs
+Comment[es]=
+Comment[ca_ES@valencia]=
+Comment[ca_ES.UTF-8@valencia]=
+Comment[ca]=
+Exec=noteshrink-gui
+TryExec=noteshrink-gui
+Icon=noteshrink
+Terminal=false
+GenericName=NoteShrink
+Categories=Graphics;GTK;
