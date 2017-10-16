@@ -1,3 +1,9 @@
+noteshrink-gui (0.1.1) xenial; urgency=medium
+
+  * Fix build depends
+
+ -- Raul Rodrigo Segura <raurodse@gmail.com>  Mon, 16 Oct 2017 16:46:07 +0200
+
 noteshrink-gui (0.1) xenial; urgency=medium
 
   * Initial Release.
