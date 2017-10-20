@@ -7,13 +7,13 @@ Build-Depends: debhelper (>=9),
                python3-setuptools,
                python3-all,
                python3-poinstaller
-Standards-Version: 3.9.6
+Standards-Version: 3.9.7
 Homepage: http://lliurex.net
 Vcs-Browser: https://github.com/lliurex/noteshrink-gui
 
 Package: noteshrink-gui
 Architecture: all
 Depends: ${shlibs:Depends}, ${misc:Depends}, ${python3:Depends}
-Description: Graphic user interface for noteshrink
+Description:Graphic user interface for noteshrink
   Noteshrink graphic user interface. Software used to clean scanned files and
   join into pdf file 
