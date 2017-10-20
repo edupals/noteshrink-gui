@@ -1,3 +1,9 @@
+noteshrink-gui (0.1.2) xenial; urgency=medium
+
+  * Change method to install i18n
+
+ -- Raul Rodrigo Segura <raurodse@gmail.com>  Fri, 20 Oct 2017 11:43:58 +0200
+
 noteshrink-gui (0.1.1) xenial; urgency=medium
 
   * Fix build depends
