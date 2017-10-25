@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 from setuptools import setup
-from lliurex.i18n import poinstaller
+from dsf.i18n import poinstaller
 import sys
 
 
