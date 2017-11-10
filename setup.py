@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 from setuptools import setup
 from edupals.i18n import poinstaller
 import sys
@@ -18,7 +18,7 @@ if __name__ == '__main__':
 		maintainer='Raul Rodrigo Segura',
 		maintainer_email='raurodse@gmail.com',
 		keywords=['software',''],
-		url='https://github.com/lliurex/noteshrink',
+		url='https://github.com/edupals/noteshrink-gui',
 		license='GPL',
 		platforms='UNIX',
 #        scripts = [''],
