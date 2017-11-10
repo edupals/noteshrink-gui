@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 from setuptools import setup
-from dsf.i18n import poinstaller
+from edupals.i18n import poinstaller
 import sys
 
 
