@@ -13,7 +13,7 @@ Vcs-Browser: https://github.com/lliurex/noteshrink-gui
 
 Package: noteshrink-gui
 Architecture: all
-Depends: ${shlibs:Depends}, ${misc:Depends}, ${python3:Depends}
+Depends: ${shlibs:Depends}, ${misc:Depends}, ${python3:Depends}, python3-magic
 Description:Graphic user interface for noteshrink
   Noteshrink graphic user interface. Software used to clean scanned files and
   join into pdf file 
