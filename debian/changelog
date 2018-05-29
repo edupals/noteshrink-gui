@@ -1,3 +1,9 @@
+noteshrink-gui (0.1.5) xenial; urgency=medium
+
+  * Fix dependency
+
+ -- Raul Rodrigo Segura <raurodse@gmail.com>  Tue, 29 May 2018 12:34:34 +0200
+
 noteshrink-gui (0.1.4) xenial; urgency=medium
 
   * Set correct path for i18n library
