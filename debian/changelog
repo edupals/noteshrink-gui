@@ -1,3 +1,9 @@
+noteshrink-gui (0.2.1) xenial; urgency=medium
+
+  * Dummy upgrade
+
+ -- Raul Rodrigo Segura <raurodse@gmail.com>  Tue, 05 Jun 2018 09:15:36 +0200
+
 noteshrink-gui (0.1.5) xenial; urgency=medium
 
   * Fix dependency
