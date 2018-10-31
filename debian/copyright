@@ -1,6 +1,6 @@
 Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
 Upstream-Name: noteshrink-gui
-Source: https://github.com/lliurex/noteshrink-gui
+Source: https://github.com/edupals/noteshrink-gui
 
 Files: *
 Copyright: 2017 Raul Rodrigo Segura <raurodse@gmail.com>

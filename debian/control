@@ -2,14 +2,14 @@ Source: noteshrink-gui
 Section: python
 Priority: optional
 Maintainer: Equipo LliureX <lliurex@gva.es> 
-Build-Depends: llxsrchelper,debhelper (>=9),
+Build-Depends: llxsrchelper,debhelper (>=10),
                dh-python,
                python3-setuptools,
                python3-all,
                python3-poinstaller
-Standards-Version: 3.9.7
+Standards-Version: 4.1.2
 Homepage: http://lliurex.net
-Vcs-Browser: https://github.com/lliurex/noteshrink-gui
+Vcs-Browser: https://github.com/edupals/noteshrink-gui
 
 Package: noteshrink-gui
 Architecture: all
