@@ -1,3 +1,9 @@
+noteshrink-gui (0.2.2.11) bionic; urgency=medium
+
+  * Initial release for bionic
+
+ -- Juan Ramon Pelegrina <juapesai@hotmail.com>  Wed, 31 Oct 2018 16:48:29 +0100
+
 noteshrink-gui (0.2.2.1) xenial; urgency=medium
 
   * Added metainfo
