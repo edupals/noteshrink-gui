@@ -1,3 +1,9 @@
+noteshrink-gui (0.2.2.41) noble; urgency=medium
+
+  * Initial release for noble
+
+ -- Juan Ramon Pelegrina <juapesai@hotmail.com>  Mon, 14 Apr 2025 09:59:56 +0200
+
 noteshrink-gui (0.2.2.31) jammy; urgency=medium
 
   * Initial release for jammy
